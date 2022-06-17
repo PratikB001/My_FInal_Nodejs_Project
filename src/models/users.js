@@ -40,6 +40,13 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 });
 
+userSchema.virtual('usermessage', {
+    ref: 'Message',
+    localField: '_id',
+    foreignField: 'senderID'
+})
+
+
 userSchema.methods.toJSON = function(){
     const user = this;
     const userObject = user.toObject();

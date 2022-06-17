@@ -36,37 +36,6 @@ router.get('/users', auth, async(req,res) => {
     }
 })
 
-router.post('/users/messages/:id', auth, async(req, res) => {
-    const _id = req.params.id;
-    try{
-        const user = await User.findById(_id);
-        if(!user){
-            return res.status(404).send('User not found');
-        }
-        const message =req.body.message;
-        user.allMessage = user.allMessage.concat({message});
-        await user.save();
-        res.send(req.body.message);
-    }catch(e){
-        res.status(400).send(e);
-        console.log(e);
-    }
-})
-
-router.get('/users/getallmessages/:id', auth, async (req, res) => {
-    const _id = req.params.id;
-    try{
-        const user = await User.findById(_id);
-        if(!user){
-            return res.status(404).send(e)
-        }
-
-        res.send(user.allMessage);
-    }catch(e){
-        res.status(400).send(e);
-    }
-})
-
 router.patch('/users/me', auth, async(req, res)=>{
     const updates = Object.keys(req.body);
     const allowedUpdates = ['name', 'email', 'password'];
